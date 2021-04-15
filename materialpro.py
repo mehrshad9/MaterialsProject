@@ -4,8 +4,14 @@ import pandas as pd
 import requests
 
 #import json
-class MaterialPro:    
-    def __init__(self, Mat,key1="kI8OEewx6FTbDV4A"):
+class MaterialPro:
+     """ This class performs many functions including multiple functions that 
+     connects to Material Project API, search the website, download the needed 
+     data, convert them to Pandas data frame and save it for furthur use.
+     """
+     def __init__(self, Mat,key1="kI8OEewx6FTbDV4A"):
+         # This function connects to the material project website and gets the
+         #json fileof the requested data
         URL1="https://www.materialsproject.org/rest/v2/materials/"
         self.Mat=Mat
         self.key1=key1
@@ -23,7 +29,7 @@ class MaterialPro:
         self.options=list(self.data1['response'][0].keys())
         self.NOp=len(self.options)
         
-    def get_option(self,option):
+     def get_option(self,option):
         for i in range(self.NOp):
             if option == self.options[i]:
                 list1=[]
@@ -31,16 +37,22 @@ class MaterialPro:
                     list1.append(self.data1['response'][j][option])
         return(list1)
             
-    def get_df(self):
+     def get_df(self):
+         # this function convets the requested data from the Material project 
+         #website and convert them to pandas dataframe
         dic1={}
         for op in self.options:
             dic1[op]=self.get_option(op)
         return pd.DataFrame(dic1)   
     
 class VaspInputs:
+    # this class is contains many post-processing codes for VASP code 
     def __init__(self):
         pass
     def poscar_selec_dyn( self,a1,a2,a3,species_vec,basis_vec,lattice_cons=1,Comment ='Comment'):
+        #This function creates the POSCAR file (position file for VASP simulation)
+        # The inputs are three lattice vectorsa1,a2,a3, material species, 
+        #baisis vectors, lattice constant and optional comments
         fw=open('POSCAR','w')
         fw.write(Comment)
         fw.write('\n{}'.format(float(lattice_cons)))
@@ -55,8 +67,10 @@ class VaspInputs:
         fw.close()
         
     def plot_bandgap(self):
+        # this function post process the bandgap file and measure the bangap
         pass
     def print_file(self,file_name ='POSCAR'):
+        #This function prints poscar file
         fr=open(file_name,'r')
         count = 0  
         while True: 
@@ -70,6 +84,8 @@ class VaspInputs:
             print("Line {}: {}".format(count, line.strip()))   
         fr.close()
     def parse_POSCAR(self):
+        # This function parse POSCAR file and extract lattice vectors, lattice 
+        #constant and basis vectors.
         fr=open('POSCAR','r')
         lines=fr.readlines()
         lattice_cons=float(lines[1][:-1])
@@ -86,8 +102,11 @@ class VaspInputs:
         fr.close()
         
     def poscar2unitcell(self):
+        # this function creates a unit cell from the POSCAR file
         pass
     def unit_2_super(self,a1,a2,a3,basis_vec,nx = 1,ny = 1,nz = 1):
+        # This function gets lattice vectors, basis vectors and create nx,ny,nz
+        #suppercell
         counter=0
         nb=len(basis_vec)
         coords = [[0 for col in range(3)] for row in range(nx*ny*nz*(nb-1)+1)]
@@ -99,6 +118,7 @@ class VaspInputs:
                         coords[counter]=[i*a1[s]+j*a2[s]+m*a3[s]+basis_vec[k][s] for s in range(3)]
         return(pd.DataFrame(coords))
     def write_xyz(self, coords,file_name ='coordinates.xyz'):
+        # this function gets coordinate of atoms and crates a xyz file 
         fw= open(file_name,'w')
         fw.write('XYZ \n\n')
         n_atoms= len(coords)

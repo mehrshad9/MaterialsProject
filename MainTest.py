@@ -14,7 +14,8 @@ coords= a.unit_2_super(a1=[0,1,1],a2=[1,0,1],a3=[1,1,0],basis_vec= lv,nx=2,ny=3,
 a.parse_POSCAR()
 
 a.write_xyz(coords.values.tolist())
+a.print_file()
 #print(coords.values.tolist())
-print(coords)
-print()
+#print(coords)
+#print()
 
