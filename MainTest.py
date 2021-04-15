@@ -4,6 +4,7 @@ Created on Sat Nov 14 22:51:48 2020
 
 @author: mmehboudi
 """
+# this code tests the Materialpro.py module
 import materialpro
 a=materialpro.VaspInputs()
 lv=[[0.5, 0.5, 0.5 ], [0.0, 0.0 ,0.0]]
