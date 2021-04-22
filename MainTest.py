@@ -5,8 +5,8 @@ Created on Sat Nov 14 22:51:48 2020
 @author: mmehboudi
 """
 # this code tests the Materialpro.py module
-import materialpro
-a=materialpro.VaspInputs()
+import materialpro as mp
+a=mp.VaspInputs()
 lv=[[0.5, 0.5, 0.5 ], [0.0, 0.0 ,0.0]]
 a.poscar_selec_dyn(a1=[0,1,1],a2=[1,0,1],a3=[1,1,0],species_vec=[1,1], lattice_cons=3.57, basis_vec= lv)
 
@@ -19,4 +19,5 @@ a.print_file()
 #print(coords.values.tolist())
 #print(coords)
 #print()
-
+Si=mp.MatSearch('Si')
+a=Si.get_df()

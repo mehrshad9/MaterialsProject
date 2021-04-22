@@ -4,7 +4,7 @@ import pandas as pd
 import requests
 
 #import json
-class MaterialPro:
+class MatSearch:
      """ This class performs many functions including multiple functions that 
      connects to Material Project API, search the website, download the needed 
      data, convert them to Pandas data frame and save it for furthur use.
